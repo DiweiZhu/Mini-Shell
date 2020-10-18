@@ -23,5 +23,6 @@ $(NAME): $(OBJ)
 clean:
 	rm -f $(ODIR)/*.o
 
+
 fclean: clean
 	rm -f $(NAME)
