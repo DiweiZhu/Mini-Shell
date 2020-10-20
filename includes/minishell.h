@@ -8,6 +8,29 @@
 #include <signal.h>
 
 #define BUFFER_SIZE 82
+#define TOKEN_SIZE 24
+
+// data structures
+typedef struct list {
+    void *value;
+    struct list *next;
+} list_t;
+
+typedef struct builtin {
+    char *name;
+    void (*func)();
+    char *description;
+} builtin_t;
+
+// minishell.c
+
+// builtin.c
+void init_builtins(list_t *builtins);
+int exec_builtin(list_t *builtins, char* name);
+void free_builtins(list_t *builtins);
+
+// builtins
+void builtin_exit();
 
 
 #endif
