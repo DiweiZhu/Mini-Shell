@@ -75,11 +75,10 @@ void free_builtins(list_t *builtins)
         list_t *cur = builtins;
         builtins = builtins->next;
 
-        builtin_t *builtin = builtins->value;
+        builtin_t *builtin = cur->value;
 
         if (builtin != NULL) {
             free(builtin->name);
-            free(builtin->func);
             free(builtin->description);
             free(builtin);
         }

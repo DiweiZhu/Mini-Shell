@@ -6,9 +6,15 @@ and the functions related to io.
 
 #include "minishell.h"
 
+// globals
+volatile sig_atomic_t flag = 1;
+
 void sigint_handler(int sig) {
+    write(0, "\n", 1);
     write(1, "\nTerminating through signal handler\n", 36);
-    exit(0);
+
+    flag = 0;
+    return;
 }
 
 void init_shell() {
@@ -60,9 +66,13 @@ DOES: take input from user, parse the input, act based on it, and loop
 */
 void minishell(list_t *builtins)
 {
-    while (1) {
+    while (flag) {
         print_prompt();
 
+        if (!flag) {
+            break;
+        }
+        
         // get the input
         char cmdInput[BUFFER_SIZE];
         if (get_input(cmdInput)) {
@@ -70,6 +80,10 @@ void minishell(list_t *builtins)
             continue;
         }
         printf("You typed: %s\n", cmdInput);
+
+        if (!flag) {
+            break;
+        }
 
         // parse the input
         char* cmd[TOKEN_SIZE];
@@ -86,6 +100,8 @@ void minishell(list_t *builtins)
 
 
     }
+
+    return;
 }
 
 void main()
@@ -100,6 +116,8 @@ void main()
 
     init_shell();
     minishell(builtins);
+
+    free_builtins(builtins);
 
     return;
 }
