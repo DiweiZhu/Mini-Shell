@@ -26,11 +26,12 @@ typedef struct builtin {
 
 // builtin.c
 void init_builtins(list_t *builtins);
-int exec_builtin(list_t *builtins, char* name);
+int exec_builtin(list_t *builtins, char* name, char **cmd);
 void free_builtins(list_t *builtins);
 
 // builtins
 void builtin_exit();
+void builtin_cd();
 
 
 #endif

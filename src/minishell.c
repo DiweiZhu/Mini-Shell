@@ -10,10 +10,9 @@ and the functions related to io.
 volatile sig_atomic_t flag = 1;
 
 void sigint_handler(int sig) {
-    write(0, "\n", 1);
-    write(1, "\nTerminating through signal handler\n", 36);
-
+    write(1, "\nTerminating through signal handler, press enter to quit.\n", 56);
     flag = 0;
+
     return;
 }
 
@@ -72,14 +71,14 @@ void minishell(list_t *builtins)
         if (!flag) {
             break;
         }
-        
+
         // get the input
         char cmdInput[BUFFER_SIZE];
         if (get_input(cmdInput)) {
             printf("Input is too long for my Mini-shell, please try other commands.\n");
             continue;
         }
-        printf("You typed: %s\n", cmdInput);
+        //printf("You typed: %s\n", cmdInput);
 
         if (!flag) {
             break;
@@ -94,7 +93,7 @@ void minishell(list_t *builtins)
         }
 
         // try to run the command as a builtin
-        exec_builtin(builtins, cmd[0]);
+        exec_builtin(builtins, cmd[0], cmd);
 
         // execute the cmd
 

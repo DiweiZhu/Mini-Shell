@@ -40,11 +40,12 @@ void add_builtin(list_t *builtins, char* name, void (*f)(), char* description)
 void init_builtins(list_t *builtins)
 {
     add_builtin(builtins, "exit", &builtin_exit, "This will free all memory and exit the shell.\n");
+    add_builtin(builtins, "cd", &builtin_cd, "Change to target directory. Usage: cd [dir]\n");
     return;
 }
 
 // return 0 if successfully execute a builtin, 1 otherwise.
-int exec_builtin(list_t *builtins, char* name)
+int exec_builtin(list_t *builtins, char *name, char **cmd)
 {
     while (builtins != NULL) {
         if (builtins->value == NULL) {
@@ -59,7 +60,7 @@ int exec_builtin(list_t *builtins, char* name)
         }
 
         if (strcmp(builtin->name, name) == 0) {
-            builtin->func();
+            builtin->func(cmd);
             return 0;
         }
 
