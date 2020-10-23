@@ -9,6 +9,8 @@ and the functions related to io.
 // globals
 volatile sig_atomic_t flag = 1;
 
+/*=========================*/
+
 void sigint_handler(int sig) {
     write(1, "\nTerminating through signal handler, press enter to quit.\n", 56);
     flag = 0;
@@ -93,10 +95,12 @@ void minishell(list_t *builtins)
         }
 
         // try to run the command as a builtin
-        exec_builtin(builtins, cmd[0], cmd);
+        if (exec_builtin(builtins, cmd[0], cmd) == 0) {
+            continue;
+        }
 
         // execute the cmd
-
+        exec_cmd(cmd);
 
     }
 

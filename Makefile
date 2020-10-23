@@ -7,7 +7,7 @@ SDIR = src
 ODIR = src/obj
 
 _DEPS = minishell.h
-_SRC = minishell.c builtins.c builtin_exit.c builtin_cd.c
+_SRC = minishell.c builtins.c builtin_exit.c builtin_cd.c exec_cmd.c
 _OBJ = $(patsubst %.c, %.o, $(_SRC))
 
 DEPS = $(patsubst %, $(IDIR)/%, $(_DEPS))
